@@ -4,8 +4,11 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mongoose = require("mongoose");
+const compression = require("compression");
+const helmet = require("helmet");
 
-const mongoDBUrl = "mongodb+srv://admin:mzJ6Rs6mWx13xDa1@cluster0.ue2mm.mongodb.net/local_library?retryWrites=true&w=majority";
+// Won't connect to actual database
+const mongoDBUrl = "mongodb+srv://admin:admin@cluster0.ue2mm.mongodb.net/local_library?retryWrites=true&w=majority";
 
 var mongoDB = process.env.MONGODB_URI || mongoDBUrl;
 
@@ -23,6 +26,8 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
+app.use(helmet());
+app.use(compression());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
